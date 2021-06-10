@@ -26,7 +26,7 @@ class WarehouseApplicationTests {
     //@Autowired
     //DataSource source;
     /**
-     * 使用JdbcTemplate实现对数据库的访问 测试git！！！
+     * 使用JdbcTemplate实现对数据库的访问 测试git！！！ this is dev!
      */
     @Test
     public void testJdbcTemplate(){

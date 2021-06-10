@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>线上仓库物资信息管理平台 · 登录</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+
+</head>
+<body class="text-center">
+<form class="form-signin" action="/user/login" method="post">
+    <h3 class="mb-3 font-weight-normal">线上仓库物资</h3>
+    <h3 class="mb-3 font-weight-normal">信息管理平台</h3>
+    <label for="username" class="sr-only">用户名</label>
+    <input type="text" id="username" name="phone" class="form-control" required autofocus>
+    <label for="password" class="sr-only">密码</label>
+    <input type="password" id="password" name="password" class="form-control" required>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> 记住我
+        </label>
+        <a href="/user/regist">去注册!</a>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">立即登录</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+</form>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+</html>

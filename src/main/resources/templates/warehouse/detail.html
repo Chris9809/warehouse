@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>仓库详情</title>
+    <!--<link href="../../lib/bootstrap-4.5.3-dist/css/bootstrap.css" rel="stylesheet">-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:include="~{include::navbar}"></div>
+<main class="container">
+    <h2 id="pageTitle" class="mt-4 mb-3 text-center" th:text="${warehouse.whName}"></h2>
+
+    <div id="pageContent">
+        <!--<div class="row justify-content-center">-->
+
+        <!--</div>-->
+        <div class="text-center">
+            <p class="text-secondary"><strong>仓库地址名称</strong>：<span th:text="${warehouse.whLocal}"></span> </p>
+            <p class="text-secondary"><strong>仓库负责人编号</strong>：<span th:text="${warehouse.ownerId}"></span></p>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">添加出/入库单</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body container">
+                        <form>
+                            <div class="form-group">
+                                <label for="goodName" class="col-form-label">货物名称:</label>
+                                <input type="text" class="form-control" id="goodName">
+                            </div>
+                            <div class="form-group">
+                                <label for="goodType" class="col-form-label">货物类型:</label>
+                                <select class="form-control" id="goodType" >
+                                    <option value="采购" selected>采购</option>
+                                    <option value="生产">生产</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 form-group">
+                                    <label for="goodNum" class="col-form-label">货物数量:</label>
+                                    <input class="form-control" id="goodNum">
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label for="goodPrice" class="col-form-label">货物单价:</label>
+                                    <input class="form-control" id="goodPrice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="allPrice" class="col-form-label">总价:</label>
+                                <input type="text" class="form-control" id="allPrice">
+                            </div>
+                            <button class="btn mt-4 mb-3 btn-block btn-lg btn-outline-success" type="button" onclick="submitOrder()">+ 提交添加</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="searchBar" class="row justify-content-between">
+            <button class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">+添加出/入库单</button>
+            <form class="form-inline my-2 my-lg-0" method="get" action="/warehouse/detail">
+                <input hidden="hidden" name="whId" type="text"  th:value="${warehouse.whId}">
+                <input class="form-control mr-sm-2" name="keyword" type="search"  aria-label="Search" placeholder="输入出/入库单内容">
+                <button class="btn btn-outline-primary my-2 my-sm-0 " type="submit">搜索</button>
+            </form>
+        </div>
+        <div class="row">
+            <table class="table table-hover table-sm mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">出/入库单号</th>
+                    <th scope="col">货物名称</th>
+                    <th scope="col">货物类型</th>
+                    <th scope="col">货物数量</th>
+                    <th scope="col">货物单价</th>
+                    <th scope="col">总价</th>
+                    <th scope="col">入库时间</th>
+                    <th scope="col">是否出库</th>
+                    <th scope="col">出库时间</th>
+                    <th scope="col" class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody  th:each="orderInfo:${list}">
+                <!--<tr th:onclick="window.location.href='/warehouse/detail?id='+[[${warehouse.whId}]]">-->
+                <tr>
+                    <td scope="row" th:text="${orderInfo.getOId()}"></td>
+                    <td th:text="${orderInfo.goodName}"></td>
+                    <td>
+                        <span th:if="${orderInfo.goodType eq '采购'}" class="badge badge-warning" th:text="${orderInfo.goodType}"></span>
+                        <span th:if="${orderInfo.goodType eq '生产'}" class="badge badge-success" th:text="${orderInfo.goodType}"></span>
+                    </td>
+                    <td><span th:text="${orderInfo.goodNum}"></span>件</td>
+                    <td><span th:text="${orderInfo.goodPrice}"></span>￥</td>
+                    <td><span th:text="${orderInfo.allPrice}"></span>￥</td>
+                    <td th:text="${#temporals.format(orderInfo.inTime,'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${orderInfo.isOut?'是':'否'}"></td>
+                    <td><span th:if="${orderInfo.outTime}" th:text="${#temporals.format(orderInfo.outTime,'yyyy-MM-dd HH:mm')}"></span></td>
+                    <td class="text-center">
+                        <button type="button" th:if="${!orderInfo.isOut}" class="btn btn-outline-primary btn-sm" th:id="${orderInfo.getOId()}" onclick="submitOut(this.id);">出库</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    function submitOut(oId){
+        // alert(oId);
+        $.ajax({
+            type: "post",
+            url: "/orderInfo/out",
+            data: {
+                oId:oId
+            },
+            dataType: "json",
+            success: function(result){
+                if (result.code==0) {
+                    if (result.data==true){
+                        alert("出库成功！");
+                        location.reload();
+                    }else {
+                        alert(result.msg);
+                    }
+                }else {
+                    alert(result.msg);
+                }
+            }
+        });
+    }
+    function isIntegerGtZero(val){
+        return /^\+?[1-9][0-9]*$/.test(val);
+    }
+    function CheckIsNullOrEmpty(value) {
+        var reg = /^\s*$/
+        return (value != null && value != undefined && !reg.test(value))
+    }
+    function isNameValid(val,len){
+        return CheckIsNullOrEmpty(val) && val.length<=len;
+    }
+    function submitOrder(){
+        var goodName = $("#goodName").val();
+        var goodType = $("#goodType").val();
+        var goodNum = parseInt($("#goodNum").val());
+        var goodPrice = parseInt($("#goodPrice").val());
+        var allPrice = parseInt($("#allPrice").val());
+
+        if (!isNameValid(goodName,50)) return;
+        if (!isIntegerGtZero(goodNum)) return;
+        if (!isIntegerGtZero(goodPrice)) return;
+        if (!isIntegerGtZero(allPrice)) return;
+
+        $.ajax({
+            type: "post",
+            url:"/orderInfo/add/",
+            contentType:"application/json;charset=UTF-8",
+            dataType:"json",
+            data: JSON.stringify({
+                goodName:goodName,
+                goodType:goodType,
+                goodNum:goodNum,
+                goodPrice:goodPrice,
+                allPrice:allPrice,
+                whId:[[${warehouse.whId}]],
+            }),
+            success: function(result) {
+                if (result.code==0) {
+
+                    if (result.data==true){
+                        $('#exampleModal').modal('hide');
+                        alert("创建出/入库单成功！");
+                        location.reload();
+                    }else {
+                        alert(result.msg);
+                    }
+                }else {
+
+                }
+            }
+        });
+    }
+
+</script>
+</html>

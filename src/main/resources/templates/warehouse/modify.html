@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link href="../../lib/bootstrap-4.5.3-dist/css/bootstrap.css" rel="stylesheet">-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:include="~{include::navbar}"></div>
+
+
+<main class="container">
+    <h2 id="pageTitle" class="mt-4 mb-3 text-center">修改仓库</h2>
+
+    <div id="pageContent">
+        <div>
+            <div class="row">
+                <div class="col-8 mb-3 mx-auto">
+                    <label for="whName">仓库名称</label>
+                    <input type="text" class="form-control" id="whName" th:value="${warehouse.whName}"  placeholder="仓库名称">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3 mx-auto">
+                    <label for="whLocal">仓库地址</label>
+                    <input type="text" class="form-control" th:value="${warehouse.whLocal}" id="whLocal" placeholder="仓库地址">
+                </div>
+            </div>
+            <button class="btn btn-outline-primary w-50 btn-block mx-auto rounded-pill" type="button" onclick="submit()">更新仓库信息</button>
+        </div>
+    </div>
+</main>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    function submit(){
+        var whName = $("#whName").val();
+        var whLocal = $("#whLocal").val();
+        if (whName!="" && whLocal!=""){
+            $.ajax({
+                type: "post",
+                url:"/warehouse/modify/",
+                contentType:"application/json;charset=UTF-8",
+                dataType:"json",
+                data: JSON.stringify({
+                    whId:[[${warehouse.whId}]],
+                    whName:whName,
+                    whLocal:whLocal
+                }),
+                success: function(result) {
+                    if (result.code==0) {
+                        if (result.data==true){
+                            alert("修改课程成功！");
+                            window.location.href = "/warehouse/list"
+                        }else {
+                            alert(result.msg);
+                        }
+                    }
+                }
+            });
+        }else {
+            alert("请补充完全仓库信息")
+        }
+
+
+
+
+    }
+</script>
+</html>

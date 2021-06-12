@@ -15,8 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootTest
 class WarehouseApplicationTests {
-    public static final String 冲突制造 = "冲突制造！";
-    //
+//
     //@Test
     //void contextLoads() {
     //}
@@ -25,7 +24,6 @@ class WarehouseApplicationTests {
     JdbcTemplate template;
     //@Autowired
     //DataSource source;
-
     /**
      * 使用JdbcTemplate实现对数据库的访问 测试git！！！ this is dev!
      */
@@ -58,7 +56,9 @@ class WarehouseApplicationTests {
         System.out.println("hello, Git!");
         System.out.println("hello, Git! ");
         System.out.println("这是一个补丁！");
-        System.out.println(冲突制造);
+        System.out.println("这是一个补丁加强版！");
+        System.out.println("并且冲突制造加入！");
+
     }
 
 }

@@ -41,14 +41,20 @@ class WarehouseApplicationTests {
     WarehouseMapper warehouseMapper;
 
     @Test
-    public void testUserMapper(){
+    public void testUserMapper() {
         User user = userMapper.selectById(1);
         System.out.println(user);
     }
 
     @Test
-    public void testWarehouseMapper(){
+    public void testWarehouseMapper() {
         Warehouse warehouse = warehouseMapper.selectWarehouseById(1);
         System.out.println(warehouse);
     }
+
+    @Test
+    public void testGit() {
+        System.out.println("hello, Git!");
+    }
+
 }

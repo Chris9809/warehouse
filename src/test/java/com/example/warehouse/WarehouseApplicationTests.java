@@ -1,17 +1,16 @@
 package com.example.warehouse;
 
-import com.example.warehouse.entity.User;
-import com.example.warehouse.entity.Warehouse;
-import com.example.warehouse.mapper.UserMapper;
-import com.example.warehouse.mapper.WarehouseMapper;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
+import com.example.warehouse.entity.User;
+import com.example.warehouse.entity.Warehouse;
+import com.example.warehouse.mapper.UserMapper;
+import com.example.warehouse.mapper.WarehouseMapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
@@ -55,7 +54,8 @@ class WarehouseApplicationTests {
     @Test
     public void testGit() {
         System.out.println("hello, Git!");
-        System.out.println("hello, Git!");
+        System.out.println("hello, Git! ");
+        System.out.println("这是一个补丁！");
     }
 
 }

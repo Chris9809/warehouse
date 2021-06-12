@@ -56,6 +56,7 @@ class WarehouseApplicationTests {
         System.out.println("hello, Git!");
         System.out.println("hello, Git! ");
         System.out.println("这是一个补丁！");
+        System.out.println("这是一个补丁加强版！");
     }
 
 }

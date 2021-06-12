@@ -55,6 +55,7 @@ class WarehouseApplicationTests {
     @Test
     public void testGit() {
         System.out.println("hello, Git!");
+        System.out.println("hello, Git!");
     }
 
 }
